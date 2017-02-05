@@ -49,25 +49,6 @@ def print_stats (est, label = "Altre misure"):
 	print "Pi:", est.pi()
 	print "S:", est.S()
 	
-	
-def printMatrix (d):
-    # get the amount of characters needed for the maximum number
-    numberWidth = len(str(max(max(v.values()) for v in d.values())))
-
-    # function to format the numbers
-    formatNumber = lambda x: str(x).rjust(numberWidth)
-
-    keys = sorted(d.keys())
-    rows = [' '.join(map(formatNumber, [''] + keys))]
-
-    for r in keys:
-        row = [r]
-        for k in keys:
-            row.append(d[r].get(k, '-'))
-        rows.append(' '.join(map(formatNumber, row)))
-
-    print('\n'.join(rows))
-	
 def print_matrice (mat, label = "Matrice di confusione"):
 	
 	print label
