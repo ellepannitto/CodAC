@@ -255,12 +255,12 @@ if __name__ == "__main__":
 							
 	subparser = parser.add_subparsers (dest="tipo", help="tipo di analisi")
 		
-	parser_s = subparser.add_parser ("sintassi",  help="calcolo agreement sulla sintassi (las, uas, la)")
+	parser_s = subparser.add_parser ("relazionale",  help="calcolo agreement sulla sintassi (las, uas, la)")
 	
 	parser_s.add_argument('-c', '--columns', metavar = "COL", nargs = 2, action = "store", type = int, default=[7, 8],
 						help='specifica le colonne su cui analizzare')
 
-	parser_m = subparser.add_parser ("morfosintassi", help="calcolo agreement sulla morfosintassi")
+	parser_m = subparser.add_parser ("categoriale", help="calcolo agreement sulla morfosintassi")
 		
 	parser_m.add_argument('-c', '--columns', metavar = "COL", nargs = 1, action = "store", type = int, default=[4],
 						help='specifica le colonne su cui analizzare')
@@ -288,7 +288,7 @@ if __name__ == "__main__":
 
 	coppie = [(args.files[i], args.files[j]) for i in range(len(args.files)-1) for j in range(i+1, len(args.files))]
 	
-	get_agreement = agreement_morfosintassi if args.tipo == "morfosintassi" else agreement_sintassi
+	get_agreement = agreement_morfosintassi if args.tipo == "categoriale" else agreement_sintassi
 	
 	for f1, f2 in coppie:
 		get_agreement(f1, f2, args.columns, args.exclude, args.to_print)
