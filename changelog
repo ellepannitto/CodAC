@@ -1,0 +1,12 @@
+CodAC ver 0.1
+  
+  * prima commit
+  * funzionalità implementate:
+	- calcolo agreement sintattico (las, uas, la)
+	- calcolo agreement morfosintattico
+	- specifica delle colonne del file su cui calcolare l'agreement
+	- esclusione di alcuni tag morfosintattici
+	- stampa della matrice di confusione
+	- stampa ulteriori indici statistici (implementati in nltk.metrics.agreement)
+  
+-- Ludovica Pannitto <ellepannitto@gmail.com> Dom, 5 Feb 2017 21:34
