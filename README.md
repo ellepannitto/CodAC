@@ -5,6 +5,16 @@ Lo script produce un'analisi sull'agreement tra annotatori, utilizzando la libre
 
 I file di input devono essere in un formato tipo conll (un token per riga, campi separati da tab)	
 
+Esempio di input:
+
+	<tok_id>	<form>	<lemma>	col4	col5	col6	...
+
+	1	Il	il	DET	RD	Definite=Def|Gender=Masc|Number=Sing|PronType=Art	3	det	_	_
+	2	finlandese	finlandese	ADJ	A	Number=Sing	3	amod	_	_
+	3	Kimi	Kimi	PROPN	SP	_	13	nsubj	_	_
+	4	Raikkonen	Raikkonen	PROPN	SP	_	3	name	_	_
+
+
 L'agreement può essere calcolato su due tipi di annotazioni:
 - categoriale (comando cat)
 - relazionale (comando rel)
