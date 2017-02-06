@@ -105,13 +105,15 @@ def agreement_sintassi (f1, f2, columns_list, tags_to_exclude, to_print):
 					
 					tid = str(line_no) 						
 					
-					tripla_uas = (doc, tid, testa) 
-					tripla_la = (doc, tid, etichetta) 
-					tripla_las = (doc, str(fr_id)+"_"+str(tok_id), testa+"_"+etichetta) 
 					
-					las_agreement.append (tripla_las)
-					uas_agreement.append (tripla_uas)
-					la_agreement.append (tripla_la)	
+					if not etichetta in tags_to_exclude:
+						tripla_la = (doc, tid, etichetta) 
+						tripla_las = (doc, str(fr_id)+"_"+str(tok_id), testa+"_"+etichetta) 
+						tripla_uas = (doc, tid, testa) 
+						
+						uas_agreement.append (tripla_uas)				
+						las_agreement.append (tripla_las)
+						la_agreement.append (tripla_la)	
 					
 					dict_label[tid][doc] = etichetta
 					dict_head[tid][doc] = testa		
@@ -236,12 +238,12 @@ if __name__ == "__main__":
 							
 	subparser = parser.add_subparsers (dest="tipo", help="tipo di analisi")
 		
-	parser_s = subparser.add_parser ("relazionale",  help="calcolo agreement sulla sintassi (las, uas, la)")
+	parser_s = subparser.add_parser ("rel",  help="calcolo agreement relazionale (las, uas, la)")
 	
 	parser_s.add_argument('-c', '--columns', metavar = "COL", nargs = 2, action = "store", type = int, default=[7, 8],
 						help='specifica le colonne su cui analizzare')
 
-	parser_m = subparser.add_parser ("categoriale", help="calcolo agreement sulla morfosintassi")
+	parser_m = subparser.add_parser ("cat", help="calcolo agreement categoriale")
 		
 	parser_m.add_argument('-c', '--columns', metavar = "COL", nargs = 1, action = "store", type = int, default=[4],
 						help='specifica le colonne su cui analizzare')
