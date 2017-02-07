@@ -1,8 +1,13 @@
+CodAC ver 0.3
+  * aggiunta possibilità di leggere una mappa per i tag (NB: non testata!)
+  
+-- Ludovica Pannitto <ellepannitto@gmail.com> Mar, 7 Feb 2017 12:55
+
 CodAC ver 0.2
   * aggiunta possibilità di escludere i tag nella versione relazionale
   * aggiornamento README
   
--- Ludovica Pannitto <ellepannitto@gmail.com> Lum, 6 Feb 2017 12:52
+-- Ludovica Pannitto <ellepannitto@gmail.com> Lun, 6 Feb 2017 12:52
 
 CodAC ver 0.1.1
   * cambio nome flag

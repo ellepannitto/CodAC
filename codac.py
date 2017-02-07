@@ -76,7 +76,7 @@ def print_matrice (mat, label = "Matrice di confusione"):
 		print strs.format(x, *(mat[x].get(y, '-') for y in sorted(labels)))
 			
 
-def agreement_sintassi (f1, f2, columns_list, tags_to_exclude, to_print):
+def agreement_sintassi (f1, f2, columns_list, tags_to_exclude, to_print, m=None):
 	
 	
 	las_agreement = []
@@ -151,6 +151,16 @@ def agreement_sintassi (f1, f2, columns_list, tags_to_exclude, to_print):
 	if "M" in to_print:
 		print_matrice(matrice_labels)
 		print
+		
+		if m:
+			new_matrice = collections.defaultdict(lambda: collections.defaultdict(int))
+			
+			for k1, d in matrice_labels.items():
+				for k2, v in d.items():
+					new_matrice[m[k1]][m[k2]] += v
+			
+			print_matrice(new_matrice, "Matrice mappata")
+			print
 	
 	if "S" in to_print:
 		print_stats(est_las, "Labeled Attachment Score")
@@ -161,7 +171,7 @@ def agreement_sintassi (f1, f2, columns_list, tags_to_exclude, to_print):
 		print
 	
 
-def agreement_morfosintassi (f1, f2, column, tags_to_exclude, to_print):
+def agreement_morfosintassi (f1, f2, column, tags_to_exclude, to_print, m=None):
 	
 	triples_list_coarse = []
 	
@@ -220,7 +230,16 @@ def agreement_morfosintassi (f1, f2, column, tags_to_exclude, to_print):
 	if "M" in to_print:
 		print_matrice(matrice_coarse)
 		print
-
+		
+		if m:
+			new_matrice = collections.defaultdict(lambda: collections.defaultdict(int))
+			
+			for k1, d in matrice_coarse.items():
+				for k2, v in d.items():
+					new_matrice[m[k1]][m[k2]] += v
+			
+			print_matrice(new_matrice, "Matrice mappata")
+			print
 
 
 if __name__ == "__main__":
@@ -229,6 +248,9 @@ if __name__ == "__main__":
 
 	parser.add_argument("-e", "--exclude", metavar = "TAG", nargs = "+", action = "store", type = str, default = [],
 						help = "specifica tag da escludere")
+
+	parser.add_argument("-m", "--mappa", metavar = "file", action = "store", type = str,
+						help = "specifica mappa per i tag")
 
 	parser.add_argument("-p", "--print", dest = "to_print", metavar = "OPTION", action = "store", type = str, default = "M",
 						help = "specifica quali informazioni aggiuntive stampare. Le opzioni sono 'M' -> matrice di confusione, \
@@ -251,6 +273,21 @@ if __name__ == "__main__":
 
 
 	args = parser.parse_args()	
+
+	if args.mappa:
+		mappa = collections.defaultdict(list)
+		
+		with codecs.open(args.mappa, "r", "utf-8") as fobj:
+			for line in fobj:
+				splitline = line.split(":")
+				supertag = splitline[0]
+				tags = splitline[1].split()
+				
+				mappa[supertag] = tags
+				
+		mappa_inversa = {v:k for k, el in mappa.items() for v in el}
+
+		print mappa_inversa
 		
 	#controllo numero files >=2
 	if len(args.files)<2:
@@ -267,6 +304,9 @@ if __name__ == "__main__":
 		f = args.files[i]
 		check_formato(f, max_col)
 		i+=1
+	
+
+		
 		
 
 	coppie = [(args.files[i], args.files[j]) for i in range(len(args.files)-1) for j in range(i+1, len(args.files))]
@@ -274,4 +314,7 @@ if __name__ == "__main__":
 	get_agreement = agreement_morfosintassi if args.tipo == "categoriale" else agreement_sintassi
 	
 	for f1, f2 in coppie:
-		get_agreement(f1, f2, args.columns, args.exclude, args.to_print)
+		if mappa_inversa:
+			get_agreement(f1, f2, args.columns, args.exclude, args.to_print, m = mappa_inversa)
+		else:
+			get_agreement(f1, f2, args.columns, args.exclude, args.to_print)
