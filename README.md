@@ -43,19 +43,27 @@ o, se si vuole specificare di utilizzare le colonne 3 e 4:
 	
 Si possono stampare informazioni aggiuntive mediante il flag -p, come:
 	- matrice di confusione (option M)
-	- indici statistici aggiuntivi (option S)
 	
 Per esempio se si vuole stampare solo la matrice si può eseguire:
 	
 	$ python codac.py -p M esempi/annotatore1.conllu esempi/annotatore2.conllu cat
-	
-Se si vogliono stampare la matrice e le metriche:
-
-	$ python codac.py -p M,S esempi/annotatore1.conllu esempi/annotatore2.conllu cat
 
 Di default viene stampato solo il valore del kappa di Cohen
 
+È possibile raggruppare in classi le etichette da stampare nella matrice di confusione. 
+Per fare ciò, è necessario fornire un file contenente un mapping classe -> lista di tag.
+Il file deve avere il seguente formato:
+
+	classe1 -> tag1	tag2	tag3	...
+	classe2 -> tag4	tag5	...
+	...
+	
+Per passare il file allo script bisogna usare il flag -m.	
+
 Per ottenere un breve riepilogo delle opzioni si può usare -h.
 
-#TODO:
-comando per file di mappa
+
+####TODO:
+- indici statistici aggiuntivi (option S)
+Se si vogliono stampare la matrice e le metriche:
+	$ python codac.py -p M,S esempi/annotatore1.conllu esempi/annotatore2.conllu cat

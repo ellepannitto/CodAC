@@ -1,3 +1,10 @@
+CodAC ver 0.4
+  * testata mappa
+  * corretto bug sul calcolo dell'agreement con tag esclusi
+  * stampa lista di relazioni discordanti
+  
+-- Ludovica Pannitto <ellepannitto@gmail.com> Mer, 8 Feb 2017 15:56
+
 CodAC ver 0.3
   * aggiunta possibilità di leggere una mappa per i tag (NB: non testata!)
   
